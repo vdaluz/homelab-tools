@@ -12,6 +12,7 @@ The goal of this repository is to share functional, standalone tools that solve 
 - **Problem**: Unbound fails to start if the `root.key` (DNSSEC trust anchor) is corrupted after a power failure.
 - **Solution**: A maintenance script for `ExecStartPre` that ensures a fresh, valid anchor is generated before the resolver starts.
 - **Tags**: `DNS`, `Unbound`, `Self-healing`, `Systemd`
+- **Write-up**: [Unbound root key auto-recovery on vdaluz.com](https://vdaluz.com/blog/unbound-root-key-auto-recovery)
 
 ## Usage
 
