@@ -14,6 +14,11 @@ The goal of this repository is to share functional, standalone tools that solve 
 - **Tags**: `DNS`, `Unbound`, `Self-healing`, `Systemd`
 - **Write-up**: [Unbound root key auto-recovery on vdaluz.com](https://vdaluz.com/blog/unbound-root-key-auto-recovery)
 
+### [Apple Music Library Export](./apple-music-library-export)
+- **Problem**: No easy way to keep a portable, backup-friendly copy of an Apple Music library (tracks + playlists) without relying on a third-party export tool.
+- **Solution**: A `launchd`-scheduled script that uses Music.app's own built-in AppleScript export command to write `Library.xml` into `~/Music`, so an existing file-level backup (Time Machine, etc.) picks it up automatically.
+- **Tags**: `macOS`, `Apple Music`, `Backup`, `launchd`, `AppleScript`
+
 ## Usage
 
 Each tool is contained within its own directory with a dedicated `README.md` explaining installation and configuration.
