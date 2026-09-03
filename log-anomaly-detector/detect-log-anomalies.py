@@ -26,11 +26,11 @@ TRAINING_LIMIT = 5000
 SCORING_LIMIT = 500
 CONTAMINATION = 0.05
 
-# Lines matching any pattern are dropped before the model sees them — from both
+# Lines matching any pattern are dropped before the model sees them, from both
 # training and scoring windows. Use this to suppress known-benign log sources
 # that score as anomalous due to unusual structure rather than actual problems.
 # Patterns are Python regexes matched case-sensitively against the raw log line.
-# To add a new exclusion: append a pattern here and redeploy the monitoring role.
+# To add a new exclusion: append a pattern here and re-run the cron job.
 EXCLUSIONS = [
     # Loki self-monitoring: query performance metrics from the querier component
     r"caller=metrics\.go.*component=querier",
@@ -181,13 +181,13 @@ def main() -> None:
     log.info("Fetching training window (%dh, limit %d)...", TRAINING_HOURS, TRAINING_LIMIT)
     training_entries = [e for e in query_loki(training_start, now, TRAINING_LIMIT) if not is_excluded(e[1])]
     if len(training_entries) < 50:
-        log.warning("Only %d training entries — skipping run (not enough data)", len(training_entries))
+        log.warning("Only %d training entries, skipping run (not enough data)", len(training_entries))
         sys.exit(0)
 
     log.info("Fetching scoring window (%dmin, limit %d)...", SCORING_MINUTES, SCORING_LIMIT)
     scoring_entries = [e for e in query_loki(scoring_start, now, SCORING_LIMIT) if not is_excluded(e[1])]
     if not scoring_entries:
-        log.info("No log entries in scoring window — nothing to do")
+        log.info("No log entries in scoring window, nothing to do")
         sys.exit(0)
 
     log.info("Training on %d entries, scoring %d entries", len(training_entries), len(scoring_entries))

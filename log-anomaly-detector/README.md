@@ -21,7 +21,7 @@ It's meant to run on a cron job every 15 minutes, matching the scoring window.
 ## Script Features
 
 - **Isolation Forest scoring**: retrains on a fresh 6-hour baseline every run, no persisted model to go stale.
-- **Feature extraction**: log level, bad-keyword hit count, message length, message frequency, and hour of day — cheap to compute, no embeddings or NLP.
+- **Feature extraction**: log level, bad-keyword hit count, message length, message frequency, and hour of day - cheap to compute, no embeddings or NLP.
 - **Exclusion list**: a small set of regex patterns to drop known-benign noisy log sources before they ever reach the model.
 - **Alertmanager integration**: deduplicates by `(job, host)` per run and posts short-lived alerts (`endsAt` ~20 minutes out) so they survive until the next cron tick without re-firing every cycle.
 
@@ -29,4 +29,4 @@ It's meant to run on a cron job every 15 minutes, matching the scoring window.
 
 This script is retired from my own homelab as of September 2026. The `CONTAMINATION = 0.05` parameter forces the Isolation Forest to always flag roughly 5% of scored lines as anomalies, no matter how clean the actual log stream is. In practice that meant the exclusion list kept growing to chase down false positives, and it eventually reached several hundred regex patterns before I replaced this with a small set of hand-written Loki ruler alert rules that match the specific error/panic/segfault patterns I actually cared about.
 
-The underlying technique still works and is a reasonable starting point if you want anomaly detection without writing a rule for every failure mode up front. Just don't pin `contamination` to a fixed value — drop it (scikit-learn defaults to `'auto'`) or tune it against your own false-positive tolerance, and budget time for exclusion-list upkeep either way.
+The underlying technique still works and is a reasonable starting point if you want anomaly detection without writing a rule for every failure mode up front. Just don't pin `contamination` to a fixed value - drop it (scikit-learn defaults to `'auto'`) or tune it against your own false-positive tolerance, and budget time for exclusion-list upkeep either way.
