@@ -19,6 +19,12 @@ The goal of this repository is to share functional, standalone tools that solve 
 - **Solution**: A `launchd`-scheduled script that uses Music.app's own built-in AppleScript export command to write `Library.xml` into `~/Music`, so an existing file-level backup (Time Machine, etc.) picks it up automatically.
 - **Tags**: `macOS`, `Apple Music`, `Backup`, `launchd`, `AppleScript`
 
+### [Log Anomaly Detector](./log-anomaly-detector)
+- **Problem**: Hand-writing an alert rule for every possible failure mode in your logs doesn't scale, and most of them you won't think of until after they've happened.
+- **Solution**: A cron-scheduled script that trains an Isolation Forest on a rolling 6-hour "normal" baseline from Loki and posts anything that scores as an outlier to Alertmanager. Retired from production (see the tool's own README for why) but published as a working reference.
+- **Tags**: `Loki`, `Alertmanager`, `Machine Learning`, `scikit-learn`, `Anomaly Detection`
+- **Write-up**: [ML anomaly detection for homelab logs with Isolation Forest on vdaluz.com](https://vdaluz.com/blog/ml-anomaly-detection-homelab-logs-isolation-forest)
+
 ## Usage
 
 Each tool is contained within its own directory with a dedicated `README.md` explaining installation and configuration.
